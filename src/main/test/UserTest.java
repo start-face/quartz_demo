@@ -1,24 +1,37 @@
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import com.quartz.controller.MyJob;
+import com.quartz.controller.QuartzManager;
 
 /**
  * @author FaceFeel
  * @Created 2018-05-06 10:42
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:spring-*.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = "classpath:spring-*.xml")
 public class UserTest {
 
-    @Before
-    private void run(){
+    public static String JOB_NAME = "动态任务调度";
+    public static String TRIGGER_NAME = "动态任务触发器";
+    public static String JOB_GROUP_NAME = "XLXXCC_JOB_GROUP";
+    public static String TRIGGER_GROUP_NAME = "XLXXCC_JOB_GROUP";
 
-    }
+    //    @Test
+//    public void quartz(){
+    public static void main(String[] args) {
+        try {
+            System.out.println("【系统启动】开始(每1秒输出一次)...");
+            QuartzManager.addJob(JOB_NAME, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, MyJob.class, "0/1 * * * * ?");
 
-    @Test
-    public void insertUser(){
+//            Thread.sleep(5000);
+            System.out.println("【修改时间】开始(每5秒输出一次)...");
+            QuartzManager.modifyJobTime(JOB_NAME, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME, "0/5 * * * * ?");
+
+//            Thread.sleep(6000);
+            System.out.println("【移除定时】开始...");
+//            QuartzManager.removeJob(JOB_NAME, JOB_GROUP_NAME, TRIGGER_NAME, TRIGGER_GROUP_NAME);
+            System.out.println("【移除定时】成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
