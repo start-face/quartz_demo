@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 定时器管理类
+ * 默认会找quartz.properties配置文件中的配置参数
+ * 如果不存在该配置文件，则会使用自定义的配置。
+ * 如果存在两者，或是该配置文件存在问题，则会抛异常
  * @author FeeMo
  */
 public class QuartzManager {
